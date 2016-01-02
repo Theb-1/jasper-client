@@ -46,7 +46,7 @@ class IvonaTTSPlugin(plugin.TTSPlugin):
             sentence_break = None
 
         try:
-            language = self.profile['language']
+            language = self.profile['ivona-tts']['language']
         except KeyError:
             language = 'en-US'
 
@@ -56,7 +56,7 @@ class IvonaTTSPlugin(plugin.TTSPlugin):
             self._pyvonavoice.region = region
 
         # Use an appropriate voice for the chosen language
-        all_voices = json.loads(self._pyvonavoice.list_voices())["Voices"]
+        all_voices = json.loads(json.dumps(self._pyvonavoice.list_voices()))["Voices"]
         suitable_voices = [v for v in all_voices if v["Language"] == language]
 
         if len(suitable_voices) == 0:

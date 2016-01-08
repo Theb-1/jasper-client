@@ -11,7 +11,7 @@ class SilencePlugin(plugin.SpeechHandlerPlugin):
 
     def handle(self, text, mic):
         """
-        Home Assistant conversation integration
+        Silence mode plugin
 
         Arguments:
         text -- user-input, typically transcribed speech

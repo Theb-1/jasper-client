@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-from client import plugin
+from jasper import plugin
 import re
 import wolframalpha
 

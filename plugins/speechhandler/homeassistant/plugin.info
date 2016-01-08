@@ -1,0 +1,10 @@
+[Plugin]
+Name = homeassistant
+Version = 1.0.0
+License = MIT
+URL = https://github.com/Theb-1/jasper-client
+Description = Home Assistant integration
+
+[Author]
+Name = Ryan
+URL = https://github.com/Theb-1/jasper-client

@@ -49,12 +49,12 @@ class IvonaTTSPlugin(plugin.TTSPlugin):
             language = self.profile['ivona-tts']['language']
         except KeyError:
             language = None
-        
+
 		if language is None:
-			try:
-				language = self.profile['language']
+            try:
+                language = self.profile['language']
 			except KeyError:
-				language = 'en-US'
+                language = 'en-US'
 
         self._pyvonavoice = pyvona.Voice(access_key, secret_key)
         self._pyvonavoice.codec = "mp3"

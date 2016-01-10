@@ -12,6 +12,7 @@ from . import conversation
 from . import mic
 from . import local_mic
 from . import notifier
+from . import restapi
 
 
 class Jasper(object):
@@ -236,6 +237,9 @@ class Jasper(object):
             else:
                 self.brain.get_notifier().add_notification_client(
                     notification_plugin.check_notification)
+
+        # Initialize RESTful API
+        self.restapi = restapi.RestAPI(self.config, self.mic, self.conversation)
 
     def list_plugins(self):
         plugins = self.plugins.get_plugins()

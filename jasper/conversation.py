@@ -24,6 +24,28 @@ class Conversation(i18n.GettextMixin):
             salutation = self.gettext("How can I be of service?")
         self.mic.say(salutation)
 
+    def handleInput(self, input):
+        if input:
+            plugin, text = self.brain.query(input)
+            if plugin and text:
+                try:
+                    plugin.handle(text, self.mic)
+                except Exception:
+                    self._logger.error('Failed to execute module',
+                                       exc_info=True)
+                    self.mic.say(self.gettext(
+                        "I'm sorry. I had some trouble with that " +
+                        "operation. Please try again later."))
+                else:
+                    self._logger.debug("Handling of phrase '%s' by " +
+                                       "module '%s' completed", text,
+                                       plugin.info.name)
+                    return True
+        else:
+            self.mic.say(self.gettext("Pardon?"))
+
+        return False
+        
     def handleForever(self):
         """
         Delegates user input to the handling function when activated.
@@ -32,20 +54,4 @@ class Conversation(i18n.GettextMixin):
         while True:
             input = self.mic.listen()
 
-            if input:
-                plugin, text = self.brain.query(input)
-                if plugin and text:
-                    try:
-                        plugin.handle(text, self.mic)
-                    except Exception:
-                        self._logger.error('Failed to execute module',
-                                           exc_info=True)
-                        self.mic.say(self.gettext(
-                            "I'm sorry. I had some trouble with that " +
-                            "operation. Please try again later."))
-                    else:
-                        self._logger.debug("Handling of phrase '%s' by " +
-                                           "module '%s' completed", text,
-                                           plugin.info.name)
-            else:
-                self.mic.say(self.gettext("Pardon?"))
+            self.handleInput(input)

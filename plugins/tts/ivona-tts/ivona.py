@@ -50,10 +50,10 @@ class IvonaTTSPlugin(plugin.TTSPlugin):
         except KeyError:
             language = None
 
-		if language is None:
+        if language is None:
             try:
                 language = self.profile['language']
-			except KeyError:
+            except KeyError:
                 language = 'en-US'
 
         self._pyvonavoice = pyvona.Voice(access_key, secret_key)

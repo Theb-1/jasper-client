@@ -22,7 +22,7 @@ class TestPlugin(plugin.NotificationPlugin):
         """
         # Notify the user of the number of times this notification has run
         # Don't enable this functionality for now
-        queue.put('%s times' % count)
+        #queue.put('%s times' % count)
         self.timestamp = datetime.datetime.now()
         # Ask Jasper to re-run this method every minute
         return self.timestamp + datetime.timedelta(seconds=60)

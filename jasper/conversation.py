@@ -1,5 +1,6 @@
 # -*- coding: utf-8 -*-
 import logging
+from time import sleep
 from . import paths
 from . import i18n
 
@@ -15,6 +16,7 @@ class Conversation(i18n.GettextMixin):
         self.translations = {
 
         }
+        self.suspended = False
 
     def greet(self):
         if 'first_name' in self.profile:
@@ -52,6 +54,26 @@ class Conversation(i18n.GettextMixin):
         """
         self._logger.debug('Starting to handle conversation.')
         while True:
-            input = self.mic.listen()
+            if not self.suspended:
+                input = self.mic.listen()
 
-            self.handleInput(input)
+            if not self.suspended:
+                self.handleInput(input)
+
+            if self.suspended:
+                sleep(0.25)
+
+    def suspend(self):
+        """
+        Suspends converstation handling
+        """
+        self._logger.debug('Suspending handling conversation.')
+        self.suspended = True
+        self.mic.cancel_listen()
+    
+    def resume(self):
+        """
+        Resumes converstation handling
+        """
+        self._logger.debug('Resuming handling conversation.')
+        self.suspended = False
